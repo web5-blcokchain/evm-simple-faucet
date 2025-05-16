@@ -13,13 +13,15 @@ const NETWORKS = [
         name: 'ETH',
         type: 'native',
         contract: '',
-        decimals: 18
+        decimals: 18,
+        amount: '0.01'
       },
       {
         name: 'USDT',
         type: 'erc20',
         contract: '0xYourGoerliUSDTAddress',
-        decimals: 6
+        decimals: 6,
+        amount: '10'
       }
     ]
   },
