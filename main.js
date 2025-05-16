@@ -186,6 +186,53 @@ async function queryAllTokenBalances() {
   resultBox.innerHTML = html;
 }
 
+// ========== 添加代币到小狐狸页面功能 ==========
+function loadAddTokenNetworks() {
+  const netSel = document.getElementById('addTokenNetworkSelect');
+  netSel.innerHTML = '';
+  NETWORKS.forEach((net, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = net.name;
+    netSel.appendChild(opt);
+  });
+  netSel.selectedIndex = 0;
+}
+
+function renderAddNetworkStepsByIdx(idx) {
+  const net = NETWORKS[idx];
+  const container = document.getElementById('add-network-steps');
+  let html = `<div class="mb-3 p-2 border rounded">
+    <b>网络名称：</b> <span class="copy-text">${net.name}</span> <button class="btn btn-sm btn-outline-secondary ms-1" onclick="copyText('${net.name}')">复制</button><br>
+    <b>RPC URL：</b> <span class="copy-text">${net.rpcUrl}</span> <button class="btn btn-sm btn-outline-secondary ms-1" onclick="copyText('${net.rpcUrl}')">复制</button><br>
+    <b>Chain ID：</b> <span class="copy-text">${net.chainId}</span> <button class="btn btn-sm btn-outline-secondary ms-1" onclick="copyText('${net.chainId}')">复制</button><br>
+    <b>区块浏览器：</b> <span class="copy-text">${net.explorerUrl}</span> <button class="btn btn-sm btn-outline-secondary ms-1" onclick="copyText('${net.explorerUrl}')">复制</button>
+  </div>`;
+  container.innerHTML = html + `<div class="text-muted small">在小狐狸钱包"设置-网络-添加网络"中填写以上参数。</div>`;
+}
+
+function renderAddTokenStepsByIdx(idx) {
+  const net = NETWORKS[idx];
+  const container = document.getElementById('add-token-steps');
+  let html = '';
+  net.tokens.forEach(token => {
+    if (token.type === 'erc20' && token.contract) {
+      html += `<div class="mb-3 p-2 border rounded">
+        <b>代币名称：</b> <span class="copy-text">${token.name}</span> <button class="btn btn-sm btn-outline-secondary ms-1" onclick="copyText('${token.name}')">复制</button><br>
+        <b>合约地址：</b> <span class="copy-text">${token.contract}</span> <button class="btn btn-sm btn-outline-secondary ms-1" onclick="copyText('${token.contract}')">复制</button><br>
+        <b>精度(Decimals)：</b> <span class="copy-text">${token.decimals}</span> <button class="btn btn-sm btn-outline-secondary ms-1" onclick="copyText('${token.decimals}')">复制</button>
+      </div>`;
+    }
+  });
+  container.innerHTML = html + `<div class="text-muted small">在小狐狸钱包"导入代币"中填写以上参数。</div>`;
+}
+
+window.copyText = function(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert('已复制到剪贴板！');
+  });
+};
+
 // ========== 事件绑定与主流程 ==========
 document.addEventListener('DOMContentLoaded', () => {
   // 用私钥推导faucetAddress，赋值给每个network
@@ -282,4 +329,14 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     queryAllTokenBalances();
   };
+
+  // 添加代币到小狐狸页面初始化
+  loadAddTokenNetworks();
+  renderAddNetworkStepsByIdx(0);
+  renderAddTokenStepsByIdx(0);
+  document.getElementById('addTokenNetworkSelect').addEventListener('change', function() {
+    const idx = this.value;
+    renderAddNetworkStepsByIdx(idx);
+    renderAddTokenStepsByIdx(idx);
+  });
 }); 

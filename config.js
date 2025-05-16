@@ -32,6 +32,27 @@ const NETWORKS = [
         amount: '10'
       }
     ]
+  },{
+    name: 'RWA-2-Test',
+    chainId: 31337,
+    rpcUrl: 'https://test-hardhat-node.usdable.com', // 免费公开RPC
+    explorerUrl: 'https://goerli.etherscan.io/tx/',
+    tokens: [
+      {
+        name: 'ETH',
+        type: 'native',
+        contract: '',
+        decimals: 18,
+        amount: '1'
+      },
+      {
+        name: 'USDT',
+        type: 'erc20',
+        contract: '0xa51807d5a12E7e78148c66dC4851CD33EEd1FDfD', // Goerli USDT
+        decimals: 18,
+        amount: '10'
+      }
+    ]
   }
   // 可继续添加更多网络
 ]; 

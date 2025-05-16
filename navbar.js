@@ -33,6 +33,8 @@ function renderNavbar(active) {
 function showPage(page) {
   document.getElementById('page-home').style.display = page === 'home' ? '' : 'none';
   document.getElementById('page-balance').style.display = page === 'balance' ? '' : 'none';
+  document.getElementById('page-addtoken').style.display = page === 'addtoken' ? '' : 'none';
+  document.getElementById('page-help').style.display = page === 'help' ? '' : 'none';
   renderNavbar(page);
   bindNavEvents();
 }
@@ -40,6 +42,8 @@ function showPage(page) {
 function bindNavEvents() {
   document.getElementById('nav-home').onclick = (e) => { e.preventDefault(); showPage('home'); };
   document.getElementById('nav-balance').onclick = (e) => { e.preventDefault(); showPage('balance'); };
+  document.getElementById('nav-addtoken').onclick = (e) => { e.preventDefault(); showPage('addtoken'); };
+  document.getElementById('nav-help').onclick = (e) => { e.preventDefault(); showPage('help'); };
   // 其它菜单项可后续扩展
 }
 

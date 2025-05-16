@@ -76,6 +76,94 @@
     </div>
   </div>
 
+  <!-- 添加代币到小狐狸页面内容区 -->
+  <div id="page-addtoken" style="display:none;">
+    <div class="faucet-container">
+      <h3 class="mb-4 text-center">添加代币到小狐狸（MetaMask）</h3>
+      <div class="mb-3">
+        <label for="addTokenNetworkSelect" class="form-label">选择区块链网络</label>
+        <select class="form-select" id="addTokenNetworkSelect"></select>
+      </div>
+      <div class="mb-4">
+        <h5>1. 添加网络</h5>
+        <div id="add-network-steps"></div>
+      </div>
+      <div class="mb-4">
+        <h5>2. 添加代币合约</h5>
+        <div id="add-token-steps"></div>
+      </div>
+      <div class="mb-4">
+        <h5>3. 查看代币余额</h5>
+        <ol>
+          <li>切换到刚刚添加的网络。</li>
+          <li>在资产列表中找到你添加的代币，或在"导入代币"中再次添加。</li>
+          <li>领取后刷新钱包页面即可看到余额变化。</li>
+        </ol>
+      </div>
+      <div class="alert alert-info">如遇问题请参考帮助文档或联系客服。</div>
+    </div>
+  </div>
+
+  <!-- 帮助文档页面内容区 -->
+  <div id="page-help" style="display:none;">
+    <div class="faucet-container">
+      <h3 class="mb-4 text-center">帮助文档</h3>
+      <div class="mb-4">
+        <h5>1. 项目简介</h5>
+        <p>本水龙头平台支持多条EVM兼容测试链和多种测试代币，帮助开发者和用户便捷获取测试币，仅供测试使用，禁止用于主网或大额资产。</p>
+      </div>
+      <div class="mb-4">
+        <h5>2. 领取测试币操作指南</h5>
+        <ol>
+          <li>在主页选择测试链和代币，输入你的钱包地址。</li>
+          <li>填写算术验证码，点击"领取测试币"。</li>
+          <li>领取成功后可在钱包或余额查询页面查看余额。</li>
+        </ol>
+        <ul>
+          <li>每次领取额度和频率以页面提示为准。</li>
+          <li>如遇领取失败，请检查钱包地址、网络状态或余额是否充足。</li>
+        </ul>
+      </div>
+      <div class="mb-4">
+        <h5>3. 余额查询说明</h5>
+        <ol>
+          <li>切换到"余额查询"页面，选择网络并输入钱包地址。</li>
+          <li>点击"查询余额"按钮，查看该地址在所选链上所有支持代币的余额。</li>
+        </ol>
+      </div>
+      <div class="mb-4">
+        <h5>4. 添加网络和代币到小狐狸（MetaMask）</h5>
+        <ol>
+          <li>切换到"添加代币到小狐狸"页面，选择目标网络。</li>
+          <li>按页面提示复制网络参数，在小狐狸钱包"设置-网络-添加网络"中填写。</li>
+          <li>复制代币合约信息，在小狐狸"导入代币"中填写。</li>
+          <li>切换到新网络后即可看到代币余额。</li>
+        </ol>
+      </div>
+      <div class="mb-4">
+        <h5>5. 常见问题（FAQ）</h5>
+        <ul>
+          <li><b>Q:</b> 为什么领取不到币？<br><b>A:</b> 可能是水龙头余额不足、领取频率过高、网络繁忙或钱包地址错误。</li>
+          <li><b>Q:</b> 余额显示为"--"或"查询失败"？<br><b>A:</b> 可能是节点不稳定、合约地址配置有误或网络未同步。</li>
+          <li><b>Q:</b> 如何获取测试网ETH？<br><b>A:</b> 可通过本水龙头或官方水龙头获取。</li>
+          <li><b>Q:</b> 如何联系开发者？<br><b>A:</b> 见下方联系方式。</li>
+        </ul>
+      </div>
+      <div class="mb-4">
+        <h5>6. 风险与免责声明</h5>
+        <p>本平台仅供测试，水龙头私钥明文存储，存在被盗风险。请勿用于主网或存放大额资产，因使用本平台造成的任何损失由用户自行承担。</p>
+      </div>
+      <div class="mb-4">
+        <h5>7. 联系方式与社区</h5>
+        <ul>
+          <li>开发者邮箱：dev@example.com</li>
+          <li>GitHub: <a href="#" target="_blank">https://github.com/your-repo</a></li>
+          <li>更多联系方式可在此补充</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <div class="footer">
     &copy; 2024 EVM Faucet | 联系方式: dev@example.com
   </div>
