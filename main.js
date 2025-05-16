@@ -140,6 +140,52 @@ function onTokenChange() {
   updateBalances();
 }
 
+// ========== 余额查询页面功能 ==========
+function loadBalanceNetworks() {
+  const netSel = document.getElementById('balanceNetworkSelect');
+  netSel.innerHTML = '';
+  NETWORKS.forEach((net, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = net.name;
+    netSel.appendChild(opt);
+  });
+  netSel.selectedIndex = 0;
+}
+
+async function queryAllTokenBalances() {
+  const netIdx = document.getElementById('balanceNetworkSelect').value;
+  const network = NETWORKS[netIdx];
+  const address = document.getElementById('balanceAddressInput').value.trim();
+  const resultBox = document.getElementById('balanceResultBox');
+  if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+    resultBox.innerHTML = '<span class="text-danger">钱包地址格式错误</span>';
+    return;
+  }
+  const provider = new ethers.JsonRpcProvider(network.rpcUrl);
+  let html = `<div><b>地址：</b>${address}</div><ul class="list-group mt-2">`;
+  for (const token of network.tokens) {
+    let bal = '--';
+    try {
+      if (token.type === 'native') {
+        const b = await provider.getBalance(address);
+        bal = ethers.formatUnits(b, token.decimals) + ' ' + token.name;
+      } else if (token.type === 'erc20' && token.contract) {
+        const abi = ["function balanceOf(address) view returns (uint256)"];
+        const contract = new ethers.Contract(token.contract, abi, provider);
+        const b = await contract.balanceOf(address);
+        bal = ethers.formatUnits(b, token.decimals) + ' ' + token.name;
+      }
+    } catch (e) {
+      bal = '查询失败';
+      console.error('余额查询失败', token, e);
+    }
+    html += `<li class="list-group-item d-flex justify-content-between align-items-center">${token.name}<span>${bal}</span></li>`;
+  }
+  html += '</ul>';
+  resultBox.innerHTML = html;
+}
+
 // ========== 事件绑定与主流程 ==========
 document.addEventListener('DOMContentLoaded', () => {
   // 用私钥推导faucetAddress，赋值给每个network
@@ -229,4 +275,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setFormEnabled(true);
     document.getElementById('claimBtn').innerHTML = `领取${currentToken.amount} ${currentToken.name}`;
   });
+
+  // 余额查询页面初始化
+  loadBalanceNetworks();
+  document.getElementById('queryBalanceBtn').onclick = (e) => {
+    e.preventDefault();
+    queryAllTokenBalances();
+  };
 }); 
