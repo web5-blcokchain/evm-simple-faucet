@@ -112,9 +112,51 @@ document.addEventListener('DOMContentLoaded', () => {
     generateCaptcha();
     setClaimBtnState();
   });
-  document.getElementById('faucetForm').addEventListener('submit', (e) => {
+  document.getElementById('faucetForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    // 领取逻辑后续实现
-    document.getElementById('resultBox').textContent = '领取功能开发中...';
+    const resultBox = document.getElementById('resultBox');
+    resultBox.textContent = '';
+    const addr = document.getElementById('addressInput').value.trim();
+    if (!isValidAddress(addr)) {
+      resultBox.innerHTML = '<span class="text-danger">钱包地址格式错误</span>';
+      return;
+    }
+    // ====== 领取核心逻辑 ======
+    // 1. 用内置私钥创建钱包
+    const PRIVATE_KEY = '0xYourFaucetPrivateKey'; // TODO: 替换为你的私钥
+    const provider = new ethers.JsonRpcProvider(currentNetwork.rpcUrl);
+    let wallet;
+    try {
+      wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+    } catch (e) {
+      resultBox.innerHTML = '<span class="text-danger">水龙头钱包配置错误</span>';
+      return;
+    }
+    // 2. 发起转账
+    try {
+      let tx;
+      let amount = '0.01'; // 默认发放数量，可根据需求调整或配置
+      if (currentToken.type === 'native') {
+        tx = await wallet.sendTransaction({
+          to: addr,
+          value: ethers.parseUnits(amount, currentToken.decimals)
+        });
+      } else if (currentToken.type === 'erc20' && currentToken.contract) {
+        const abi = ["function transfer(address,uint256) returns (bool)"];
+        const contract = new ethers.Contract(currentToken.contract, abi, wallet);
+        tx = await contract.transfer(addr, ethers.parseUnits(amount, currentToken.decimals));
+      } else {
+        resultBox.innerHTML = '<span class="text-danger">代币类型不支持</span>';
+        return;
+      }
+      resultBox.innerHTML = `<span class="text-success">领取成功！</span><br>交易哈希：<a href="${currentNetwork.explorerUrl}${tx.hash}" target="_blank">${tx.hash}</a>`;
+      await tx.wait();
+      updateBalances();
+      generateCaptcha();
+      setClaimBtnState();
+    } catch (err) {
+      let msg = err && err.message ? err.message : String(err);
+      resultBox.innerHTML = `<span class="text-danger">领取失败：${msg}</span>`;
+    }
   });
 }); 
