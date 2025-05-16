@@ -37,6 +37,16 @@ function showPage(page) {
   document.getElementById('page-help').style.display = page === 'help' ? '' : 'none';
   renderNavbar(page);
   bindNavEvents();
+  // 余额查询页面每次切换都刷新下拉框
+  if (page === 'balance' && typeof loadBalanceNetworks === 'function') {
+    loadBalanceNetworks();
+  }
+  // 添加代币页面每次切换都刷新下拉框和内容
+  if (page === 'addtoken' && typeof loadAddTokenNetworks === 'function') {
+    loadAddTokenNetworks();
+    renderAddNetworkStepsByIdx(0);
+    renderAddTokenStepsByIdx(0);
+  }
 }
 
 function bindNavEvents() {
