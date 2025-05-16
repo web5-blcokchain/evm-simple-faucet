@@ -70,17 +70,17 @@ async function updateBalances() {
   try {
     const bal = await provider.getBalance(faucetAddr);
     nativeBal = ethers.formatEther(bal) + ' ' + currentNetwork.tokens[0].name;
-  } catch (e) {}
+  } catch (e) { console.error('查询Native余额出错:', e); }
   document.getElementById('nativeBalance').textContent = 'Native余额：' + nativeBal;
   // 代币余额
   let tokenBal = '--';
   if (currentToken.type === 'erc20' && currentToken.contract) {
     try {
-      const abi = ["function balanceOf(address) view returns (uint256)", "function decimals() view returns (uint8)"];
+      const abi = ["function balanceOf(address) view returns (uint256)"];
       const contract = new ethers.Contract(currentToken.contract, abi, provider);
       const bal = await contract.balanceOf(faucetAddr);
       tokenBal = ethers.formatUnits(bal, currentToken.decimals) + ' ' + currentToken.name;
-    } catch (e) {}
+    } catch (e) { console.error('查询ERC20余额出错:', e, currentToken); }
   } else if (currentToken.type === 'native') {
     tokenBal = nativeBal;
   }
@@ -136,6 +136,7 @@ function loadTokens() {
 function onTokenChange() {
   const idx = document.getElementById('tokenSelect').value;
   currentToken = currentNetwork.tokens[idx];
+  console.log('切换代币:', currentToken);
   updateBalances();
 }
 

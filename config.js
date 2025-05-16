@@ -27,8 +27,8 @@ const NETWORKS = [
       {
         name: 'USDT',
         type: 'erc20',
-        contract: '0x07865c6e87b9f70255377e024ace6630c1eaa37f', // Goerli USDT
-        decimals: 6,
+        contract: '0xa51807d5a12E7e78148c66dC4851CD33EEd1FDfD', // Goerli USDT
+        decimals: 18,
         amount: '10'
       }
     ]
