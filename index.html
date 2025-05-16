@@ -15,48 +15,73 @@
   </style>
 </head>
 <body>
-  <div class="faucet-container">
-    <h3 class="mb-4 text-center">EVM 测试币水龙头</h3>
-    <form id="faucetForm" autocomplete="off">
-      <div class="mb-3">
-        <label for="networkSelect" class="form-label">选择测试链</label>
-        <select class="form-select" id="networkSelect"></select>
-      </div>
-      <div class="mb-3">
-        <label for="tokenSelect" class="form-label">选择代币类型</label>
-        <select class="form-select" id="tokenSelect"></select>
-      </div>
-      <div class="balance-box mb-3">
-        <div>水龙头钱包余额：</div>
-        <div id="nativeBalance">Native余额：--</div>
-        <div id="tokenBalance">代币余额：--</div>
-      </div>
-      <div class="mb-3">
-        <label for="addressInput" class="form-label">输入钱包地址</label>
-        <input type="text" class="form-control" id="addressInput" placeholder="0x..." required>
-      </div>
-      <div class="mb-3 row align-items-center">
-        <div class="col-7">
-          <label for="captchaInput" class="form-label">验证码</label>
-          <input type="text" class="form-control" id="captchaInput" required autocomplete="off">
+  <!-- 公用导航栏组件 -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- 主页面内容区 -->
+  <div id="page-home">
+    <div class="faucet-container">
+      <h3 class="mb-4 text-center">EVM 测试币水龙头</h3>
+      <form id="faucetForm" autocomplete="off">
+        <div class="mb-3">
+          <label for="networkSelect" class="form-label">选择测试链</label>
+          <select class="form-select" id="networkSelect"></select>
         </div>
-        <div class="col-5 d-flex align-items-end">
-          <span id="captchaQuestion" class="captcha-img me-2"></span>
-          <button type="button" class="btn btn-outline-secondary btn-sm" id="refreshCaptcha">刷新</button>
+        <div class="mb-3">
+          <label for="tokenSelect" class="form-label">选择代币类型</label>
+          <select class="form-select" id="tokenSelect"></select>
         </div>
+        <div class="balance-box mb-3">
+          <div>水龙头钱包余额：</div>
+          <div id="nativeBalance">Native余额：--</div>
+          <div id="tokenBalance">代币余额：--</div>
+        </div>
+        <div class="mb-3">
+          <label for="addressInput" class="form-label">输入钱包地址</label>
+          <input type="text" class="form-control" id="addressInput" placeholder="0x..." required>
+        </div>
+        <div class="mb-3 row align-items-center">
+          <div class="col-7">
+            <label for="captchaInput" class="form-label">验证码</label>
+            <input type="text" class="form-control" id="captchaInput" required autocomplete="off">
+          </div>
+          <div class="col-5 d-flex align-items-end">
+            <span id="captchaQuestion" class="captcha-img me-2"></span>
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="refreshCaptcha">刷新</button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100" id="claimBtn" disabled>领取测试币</button>
+      </form>
+      <div class="result-box" id="resultBox"></div>
+      <div class="alert alert-warning mt-3" role="alert">
+        仅供测试，严禁用于生产环境。请勿存放主网或大额资产。
       </div>
-      <button type="submit" class="btn btn-primary w-100" id="claimBtn" disabled>领取测试币</button>
-    </form>
-    <div class="result-box" id="resultBox"></div>
-    <div class="alert alert-warning mt-3" role="alert">
-      仅供测试，严禁用于生产环境。请勿存放主网或大额资产。
     </div>
   </div>
+
+  <!-- 余额查询页面内容区 -->
+  <div id="page-balance" style="display:none;">
+    <div class="faucet-container">
+      <h3 class="mb-4 text-center">余额查询</h3>
+      <div class="mb-3">
+        <label for="balanceNetworkSelect" class="form-label">选择区块链网络</label>
+        <select class="form-select" id="balanceNetworkSelect"></select>
+      </div>
+      <div class="mb-3">
+        <label for="balanceAddressInput" class="form-label">输入钱包地址</label>
+        <input type="text" class="form-control" id="balanceAddressInput" placeholder="0x..." required>
+      </div>
+      <button class="btn btn-primary w-100 mb-3" id="queryBalanceBtn">查询余额</button>
+      <div id="balanceResultBox"></div>
+    </div>
+  </div>
+
   <div class="footer">
     &copy; 2024 EVM Faucet | 联系方式: dev@example.com
   </div>
   <script src="libs/ethers.umd.min.js"></script>
   <script src="config.js"></script>
   <script src="main.js"></script>
+  <script src="navbar.js"></script>
 </body>
 </html> 
