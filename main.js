@@ -147,6 +147,23 @@ function onTokenChange() {
       tip.classList.add('d-none');
     }
   }
+  // 合约地址显示
+  const contractBox = document.getElementById('tokenContractBox');
+  const contractAddr = document.getElementById('tokenContractAddr');
+  const copyBtn = document.getElementById('copyTokenContractBtn');
+  if (currentToken.type === 'erc20' && currentToken.contract) {
+    contractAddr.textContent = currentToken.contract;
+    copyBtn.style.display = '';
+    copyBtn.onclick = function() {
+      navigator.clipboard.writeText(currentToken.contract).then(() => {
+        copyBtn.textContent = '已复制';
+        setTimeout(() => { copyBtn.textContent = '复制'; }, 1200);
+      });
+    };
+  } else {
+    contractAddr.textContent = '-';
+    copyBtn.style.display = 'none';
+  }
 }
 
 // ========== 余额查询页面功能 ==========
