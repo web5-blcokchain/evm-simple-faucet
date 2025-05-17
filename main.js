@@ -112,6 +112,7 @@ function onNetworkChange() {
   const idx = document.getElementById('networkSelect').value;
   currentNetwork = NETWORKS[idx];
   loadTokens();
+  updateFaucetAddressBox();
 }
 
 /**
@@ -259,6 +260,24 @@ window.copyText = function(text) {
   });
 };
 
+function updateFaucetAddressBox() {
+  const addrBox = document.getElementById('faucetAddress');
+  const copyBtn = document.getElementById('copyFaucetAddressBtn');
+  if (currentNetwork && currentNetwork.faucetAddress) {
+    addrBox.textContent = currentNetwork.faucetAddress;
+    copyBtn.style.display = '';
+    copyBtn.onclick = function() {
+      navigator.clipboard.writeText(currentNetwork.faucetAddress).then(() => {
+        copyBtn.textContent = '已复制';
+        setTimeout(() => { copyBtn.textContent = '复制'; }, 1200);
+      });
+    };
+  } else {
+    addrBox.textContent = '-';
+    copyBtn.style.display = 'none';
+  }
+}
+
 // ========== 事件绑定与主流程 ==========
 document.addEventListener('DOMContentLoaded', () => {
   // 用私钥推导faucetAddress，赋值给每个network
@@ -368,4 +387,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 页面初始时也调用一次onTokenChange，确保提示正确
   onTokenChange();
+  updateFaucetAddressBox();
 }); 
