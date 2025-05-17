@@ -138,6 +138,15 @@ function onTokenChange() {
   currentToken = currentNetwork.tokens[idx];
   console.log('切换代币:', currentToken);
   updateBalances();
+  // 非native token提示
+  const tip = document.getElementById('nonNativeTokenTip');
+  if (tip) {
+    if (currentToken.type !== 'native') {
+      tip.classList.remove('d-none');
+    } else {
+      tip.classList.add('d-none');
+    }
+  }
 }
 
 // ========== 余额查询页面功能 ==========
@@ -339,4 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAddNetworkStepsByIdx(idx);
     renderAddTokenStepsByIdx(idx);
   });
+
+  // 页面初始时也调用一次onTokenChange，确保提示正确
+  onTokenChange();
 }); 
