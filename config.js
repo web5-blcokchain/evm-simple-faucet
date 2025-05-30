@@ -30,6 +30,13 @@ const NETWORKS = [
         contract: '0x226A19c076a3047a53e5430B14bcDB42dbccA159', // Goerli USDT
         decimals: 18,
         amount: '100'
+      },
+      {
+        name: 'USDT(Ddream)',
+        type: 'erc20',
+        contract: '0x8F58ed4a2f317037fC1C671255F99fA69F797167', // Goerli USDT
+        decimals: 18,
+        amount: '100'
       }
     ]
   }
